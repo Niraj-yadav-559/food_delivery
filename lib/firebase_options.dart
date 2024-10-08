@@ -85,5 +85,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'fooddeliveryapp-aff4e.appspot.com',
     measurementId: 'G-VCMDHNP3RF',
   );
-
 }
