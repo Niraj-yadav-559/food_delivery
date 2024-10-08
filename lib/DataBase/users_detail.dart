@@ -9,5 +9,7 @@ class DatabaseMethods {
         .doc(Id)
         .set(userInfoMap);     
   }
+
+  addFoodItem(Map<String, dynamic> addItem) {}
   
 }

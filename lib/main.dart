@@ -51,21 +51,23 @@ void main() async {
 
   // Initialize Firebase with different options for Web, Android, and iOS
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform, // Add this to pass platform-specific FirebaseOptions
+    options: DefaultFirebaseOptions
+        .currentPlatform, // Add this to pass platform-specific FirebaseOptions
   );
 
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Onboard(),
       // home: on(),
+      
     );
   }
 }
