@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:food_app/Admin/admin_login.dart';
+import 'package:food_app/Admin/home_admin.dart';
+import 'package:food_app/Pages/login.dart';
 import 'package:food_app/firebase_options.dart';
 import 'package:food_app/pages/onboard.dart';
 import 'package:food_app/wiget/app_constent.dart';
@@ -64,7 +67,7 @@ class MyApp extends StatelessWidget {
     
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Onboard(),
+      home: HomeAdmin(),
       // home: on(),
     );
   }

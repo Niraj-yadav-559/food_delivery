@@ -21,15 +21,15 @@ class _ButtomnavState extends State<Buttomnav> {
   late Home homepage;
   late Profile profile;
   late Order order;
-  late Wallet wallet;ō
+ // late Wallet wallet;
 
   @override
   void initState() {
     homepage = const Home();
     order = const Order();
     profile = const Profile();
-    wallet = const Wallet(); 
-    pages = [homepage, order, wallet, profile];
+   // wallet = const Wallet(); 
+    pages = [homepage, order,  profile];
     super.initState();
   }
   @override
