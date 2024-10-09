@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:food_delivery/Pages/DataBase/users_detail.dart';
-import 'package:food_delivery/service/auth.dart';
-import 'package:food_delivery/service/shared.dart';
+import 'package:food_app/service/auth.dart';
+import 'package:food_app/service/shared.dart';
+// import 'package:food_delivery/Pages/DataBase/users_detail.dart';
+// import 'package:food_delivery/service/auth.dart';
+// import 'package:food_delivery/service/shared.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:random_string/random_string.dart';
 
