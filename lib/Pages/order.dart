@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/wiget/widget_support.dart';
+// import 'package:food_delivery/widget/widget_support.dart';
 
 class Order extends StatefulWidget {
   const Order({super.key});
@@ -10,6 +12,25 @@ class Order extends StatefulWidget {
 class _OrderState extends State<Order> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Container(
+        child: Column(
+          children: [
+            Material(
+              elevation: 2.0,
+              child: Container(
+                padding: EdgeInsets.only(bottom: 10.0),
+                child: Center(
+                  child: Text(
+                    "Wallet",
+                    style: AppWidget.HeadlineTextFeildStyle(),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
