@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart'; // Import this to use kIsWeb
 import 'package:flutter/material.dart';
 import 'package:food_app/DataBase/users_detail.dart';
 import 'package:food_app/wiget/widget_support.dart';
-
-// import 'package:food_delivery/wiget/content_model.dart';
-// import 'package:food_delivery/wiget/widget_support.dart'; // Ensure this is correct
 import 'package:image_picker/image_picker.dart';
 import 'package:random_string/random_string.dart';
 
@@ -24,15 +22,24 @@ class _AddFoodState extends State<AddFood> {
   TextEditingController detailcontroller = TextEditingController();
   final ImagePicker _picker = ImagePicker();
   File? selectedImage;
+  String? selectedImageUrl; // To store the image URL for web
 
   // Function to pick an image
   Future<void> getImage() async {
     try {
       var image = await _picker.pickImage(source: ImageSource.gallery);
       if (image != null) {
-        setState(() {
-          selectedImage = File(image.path);
-        });
+        if (!kIsWeb) {
+          // Running on mobile, use File
+          setState(() {
+            selectedImage = File(image.path);
+          });
+        } else {
+          // Running on web, store the image URL
+          setState(() {
+            selectedImageUrl = image.path;
+          });
+        }
       } else {
         _showSnackBar("No image selected", Colors.redAccent);
       }
@@ -43,18 +50,32 @@ class _AddFoodState extends State<AddFood> {
 
   // Function to upload the item details
   Future<void> uploadItem() async {
-    if (selectedImage != null &&
+    if ((selectedImage != null || selectedImageUrl != null) &&
         namecontroller.text.isNotEmpty &&
         pricecontroller.text.isNotEmpty &&
         detailcontroller.text.isNotEmpty &&
         value != null) {
       try {
         String addId = randomAlphaNumeric(10);
-        Reference firebaseStorageRef =
-            FirebaseStorage.instance.ref().child("blogImages").child(addId);
-        final UploadTask task = firebaseStorageRef.putFile(selectedImage!);
+        String? downloadUrl;
 
-        var downloadUrl = await (await task).ref.getDownloadURL();
+        if (!kIsWeb && selectedImage != null) {
+          // Uploading the image from mobile device
+          Reference firebaseStorageRef =
+              FirebaseStorage.instance.ref().child("blogImages").child(addId);
+          final UploadTask task = firebaseStorageRef.putFile(selectedImage!);
+
+          downloadUrl = await (await task).ref.getDownloadURL();
+        } else if (selectedImageUrl != null) {
+          // Uploading the image from web
+          Reference firebaseStorageRef =
+              FirebaseStorage.instance.ref().child("blogImages").child(addId);
+          final UploadTask task = firebaseStorageRef.putData(
+            await XFile(selectedImageUrl!).readAsBytes(),
+          );
+
+          downloadUrl = await (await task).ref.getDownloadURL();
+        }
 
         Map<String, dynamic> addItem = {
           "Image": downloadUrl,
@@ -110,7 +131,8 @@ class _AddFoodState extends State<AddFood> {
               Text("Upload the Item Picture",
                   style: AppWidget.semiboldTextFeildStyle()),
               SizedBox(height: 20.0),
-              selectedImage == null
+              // Display image differently for mobile and web
+              selectedImage == null && selectedImageUrl == null
                   ? GestureDetector(
                       onTap: getImage,
                       child: Center(
@@ -144,10 +166,9 @@ class _AddFoodState extends State<AddFood> {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20),
-                            child: Image.network(
-                              selectedImage.toString(),
-                              fit: BoxFit.cover,
-                            ),
+                            child: !kIsWeb
+                                ? Image.file(selectedImage!)
+                                : Image.network(selectedImageUrl!),
                           ),
                         ),
                       ),
@@ -238,20 +259,15 @@ class _AddFoodState extends State<AddFood> {
           items: fooditems
               .map((item) => DropdownMenuItem<String>(
                     value: item,
-                    child: Text(item,
-                        style: TextStyle(fontSize: 18.0, color: Colors.black)),
+                    child: Text(item),
                   ))
               .toList(),
-          onChanged: (newValue) {
+          value: value,
+          onChanged: (value) {
             setState(() {
-              value = newValue;
+              this.value = value;
             });
           },
-          dropdownColor: Colors.white,
-          hint: Text("Select Category"),
-          iconSize: 36,
-          icon: Icon(Icons.arrow_drop_down, color: Colors.black),
-          value: value,
         ),
       ),
     );
