@@ -19,7 +19,7 @@ bool icecream = false, pizza = false, salad = false, burger = false;
 Stream? fooditemStrem;
 
 ontheload()async {
-fooditemStrem= await DatabaseMethods().getFoodItem("Pizza");
+// fooditemStrem= await DatabaseMethods().getFoodItem("Pizza");
 setState(() {
   
 });
@@ -31,6 +31,75 @@ void initState() {
   ontheload();
 }
 
+Widget allItemsVertically() {
+  return StreamBuilder(stream: fooditemStrem, builder: (context, AsyncSnapshot snapshot){
+  return snapshot.hasData? ListView.builder(
+    padding: EdgeInsets.zero,
+    itemCount: snapshot.data.docs.length,
+    shrinkWrap: true,
+    scrollDirection: Axis.vertical,
+    itemBuilder: (context, index){
+    DocumentSnapshot ds = snapshot.data.docs[index];
+    return  GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const Details()));
+                        },
+                        child:Container(
+                margin:  EdgeInsets.only(right: 20.0),
+                child: Material(
+                  elevation: 5.0,
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.network(ds["Image"],
+                        height: 120,
+                        width: 120,
+                        fit: BoxFit.cover,
+                        ),
+                        const SizedBox(width: 20.0,),
+                        Column(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width/2,
+                              child: Text("Mediterranean Chickpea salad",
+                               style: AppWidget.semiboldTextFeildStyle(),
+                               
+                               ),
+                               
+                            ),
+                            const SizedBox(height: 5.0,),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width/2,
+                              child: Text(ds["Name"],
+                               style: AppWidget.LightTextFeildStyle(),
+                               ),
+                               
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width/2,
+                              child: Text("\$28"+ds["Price"],
+                               style: AppWidget.semiboldTextFeildStyle(),
+                               
+                               ),
+                               
+                            ),
+                            
+                            
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+  }):CircularProgressIndicator();
+  });
+}
+
 Widget allItems() {
   return StreamBuilder(stream: fooditemStrem, builder: (context, AsyncSnapshot snapshot){
   return snapshot.hasData? ListView.builder(
@@ -40,7 +109,7 @@ Widget allItems() {
     scrollDirection: Axis.horizontal,
     itemBuilder: (context, index){
     DocumentSnapshot ds = snapshot.data.docs[index];
-    rerurn  GestureDetector;(
+    return  GestureDetector(
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const Details()));
                         },
@@ -54,10 +123,13 @@ Widget allItems() {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                Image.network(ds["Image"],
-                                 height: 150,
-                                width: 150, 
-                                fit: BoxFit.cover,
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(ds["Image"],
+                                   height: 150,
+                                  width: 150, 
+                                  fit: BoxFit.cover,
+                                  ),
                                 ),
                                 Text(ds["Name"],
                                  style: AppWidget.semiboldTextFeildStyle()),
@@ -119,7 +191,7 @@ Widget allItems() {
                   child: allItems()),
                 const SizedBox(height: 30.0,),
               Container(
-                margin: const EdgeInsets.only(right: 20.0),
+                margin:  EdgeInsets.only(right: 20.0),
                 child: Material(
                   elevation: 5.0,
                   borderRadius: BorderRadius.circular(20),
@@ -169,7 +241,10 @@ Widget allItems() {
                   ),
                 ),
               ),
-           
+              SizedBox(
+                height: 30,
+              ),
+              allItemsVertically(),
 
           ]
         ),
