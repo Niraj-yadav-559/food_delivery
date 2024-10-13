@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import '../wiget/widget_support.dart';
 
 class Details extends StatefulWidget {
-  const Details({super.key});
+  // const Details({super.key});
+  String image, name, detail, price;
+  Details({required this.detail, required this.image, required this.name, required this.price});
 
   @override
   State<Details> createState() => _DetailsState();
@@ -31,7 +33,7 @@ class _DetailsState extends State<Details> {
               ),
               
             ),
-            Image.asset("assets/salad2.png",
+            Image.network(widget.image,
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height/2.5,
             fit: BoxFit.fill,
@@ -44,8 +46,12 @@ class _DetailsState extends State<Details> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Mediterranean",style: AppWidget.semiboldTextFeildStyle(),),
-                  Text("Chickpea Salad",style: AppWidget.boldTextFeildStyle(),),
+                  Text(widget.name,
+                  style: AppWidget.semiboldTextFeildStyle(),
+                  ),
+                  Text("Chickpea Salad",
+                  style: AppWidget.boldTextFeildStyle(),
+                  ),
                 ],
               ),
               const Spacer(),
@@ -80,7 +86,7 @@ class _DetailsState extends State<Details> {
               ),
             ],),
             const SizedBox(height: 20.0,),
-            Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to print books and typesetting products. Lorem Ipsum",maxLines: 3, 
+            Text(widget.detail,maxLines: 4, 
             style: AppWidget.LightTextFeildStyle(),
             ),
             const SizedBox(height: 20.0,),
@@ -101,7 +107,7 @@ class _DetailsState extends State<Details> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                   Text("Total Price", style: AppWidget.semiboldTextFeildStyle(),),
-                  Text("\$28", style: AppWidget.HeadlineTextFeildStyle(),)
+                  Text("\$"+widget.price, style: AppWidget.HeadlineTextFeildStyle(),)
                 ],),
                 Container(
                   width: MediaQuery.of(context).size.width/2,

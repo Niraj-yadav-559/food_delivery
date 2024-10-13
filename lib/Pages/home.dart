@@ -111,7 +111,8 @@ Widget allItems() {
     DocumentSnapshot ds = snapshot.data.docs[index];
     return  GestureDetector(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const Details()));
+                          Navigator.push(context, 
+                          MaterialPageRoute(builder: (context) => const Details()));
                         },
                         child: Container(
                           margin: const EdgeInsets.all(4),
@@ -257,11 +258,12 @@ Widget allItems() {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: (){
+                      onTap: () async{
                         icecream = true;
                         pizza = false;
                         salad = false;
                         burger = false;
+                        fooditemStrem = await DatabaseMethods().getFoodItem("Ice-cream");
                         setState(() {
                           
                         });
@@ -277,11 +279,12 @@ Widget allItems() {
                       ),
                     ),
                    GestureDetector(
-                      onTap: (){
+                      onTap: () async{
                         icecream = false;
                         pizza = true;
                         salad = false;
                         burger = false;
+                        fooditemStrem = await DatabaseMethods().getFoodItem("Pizza");
                         setState(() {
                           
                         });
@@ -297,11 +300,12 @@ Widget allItems() {
                       ),
                     ),
                     GestureDetector(
-                      onTap: (){
+                      onTap: () async{
                         icecream = false;
                         pizza = false;
                         salad = true;
                         burger = false;
+                        fooditemStrem = await DatabaseMethods().getFoodItem("Salad");
 
                         setState(() {
                           
@@ -318,11 +322,12 @@ Widget allItems() {
                       ),
                     ),
                     GestureDetector(
-                      onTap: (){
+                      onTap: () async{
                         icecream = false;
                         pizza = false;
                         salad = false;
                         burger = true;
+                        fooditemStrem = await DatabaseMethods().getFoodItem("Burger");
                         setState(() {
                           
                         });
