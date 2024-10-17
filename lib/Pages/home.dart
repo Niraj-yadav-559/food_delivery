@@ -18,12 +18,11 @@ bool icecream = false, pizza = false, salad = false, burger = false;
 
 Stream? fooditemStrem;
 
-ontheload()async {
-// fooditemStrem= await DatabaseMethods().getFoodItem("Pizza");
-setState(() {
-  
-});
+ontheload() async {
+  fooditemStrem = DatabaseMethods().getFoodItem("Pizza");
+  setState(() {});
 }
+
 
 
 void initState() {
@@ -42,7 +41,7 @@ Widget allItemsVertically() {
     DocumentSnapshot ds = snapshot.data.docs[index];
     return  GestureDetector(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const Details()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Details(detail: ds["Detail"],name: ds["Name"],price: ds["Price"],image: ds["Image"],)));
                         },
                         child:Container(
                 margin:  EdgeInsets.only(right: 20.0),
@@ -112,7 +111,7 @@ Widget allItems() {
     return  GestureDetector(
                         onTap: (){
                           Navigator.push(context, 
-                          MaterialPageRoute(builder: (context) => const Details()));
+                          MaterialPageRoute(builder: (context) =>  Details(detail: ds["Detail"],name: ds["Name"],price: ds["Price"],image: ds["Image"],)));
                         },
                         child: Container(
                           margin: const EdgeInsets.all(4),

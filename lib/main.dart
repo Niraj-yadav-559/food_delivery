@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:food_app/Admin/admin_login.dart';
 import 'package:food_app/Admin/home_admin.dart';
+import 'package:food_app/Pages/home.dart';
 import 'package:food_app/Pages/login.dart';
 import 'package:food_app/Pages/wallet.dart';
 import 'package:food_app/firebase_options.dart';
@@ -68,7 +69,8 @@ class MyApp extends StatelessWidget {
     
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: WalletPage()
+      // home: Onboard()
+      home: Home(),
       // home: on(),
     );
   }

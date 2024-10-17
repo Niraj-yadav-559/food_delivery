@@ -62,16 +62,16 @@ class _AddFoodState extends State<AddFood> {
         if (!kIsWeb && selectedImage != null) {
           // Uploading the image from mobile device
           Reference firebaseStorageRef =
-              FirebaseStorage.instance.ref().child("blogImages").child(addId);
+              FirebaseStorage.instance.ref().child("foodImages").child(addId);
           final UploadTask task = firebaseStorageRef.putFile(selectedImage!);
 
           downloadUrl = await (await task).ref.getDownloadURL();
-        } else if (selectedImageUrl != null) {
+        } else if (kIsWeb && selectedImageUrl != null) {
           // Uploading the image from web
           Reference firebaseStorageRef =
-              FirebaseStorage.instance.ref().child("blogImages").child(addId);
+              FirebaseStorage.instance.ref().child("foodImages").child(addId);
           final UploadTask task = firebaseStorageRef.putData(
-            await XFile(selectedImageUrl!).readAsBytes(),
+            await File(selectedImageUrl!).readAsBytes(),
           );
 
           downloadUrl = await (await task).ref.getDownloadURL();
@@ -85,12 +85,14 @@ class _AddFoodState extends State<AddFood> {
           "Category": value
         };
 
-        await DatabaseMethods().addFoodItem(addItem).then(() {
+        // Ensure to call the correct field name 'Name'
+        await DatabaseMethods().addFoodItem(addItem, namecontroller.text).then((_) {
           _showSnackBar(
             "Food Item has been added successfully",
             Colors.orangeAccent,
           );
         });
+
       } catch (e) {
         _showSnackBar("Error uploading item: $e", Colors.redAccent);
       }
