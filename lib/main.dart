@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:food_app/Pages/forgotpassword.dart';
+import 'package:food_app/Pages/home.dart';
 import 'package:food_app/Pages/order.dart';
 import 'package:food_app/firebase_options.dart';
 import 'package:food_app/pages/onboard.dart';
@@ -66,11 +67,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // home: Onboard(),
-      // home: Order()
-      home: Forgotpassword(),
-      // home: on(),
-    );
+        debugShowCheckedModeBanner: false,
+        // home: Onboard(),
+        // home: Order()
+        // home: Forgotpassword(),
+        home: Home());
   }
 }

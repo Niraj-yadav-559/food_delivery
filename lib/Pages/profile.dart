@@ -116,7 +116,7 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 70.0),
+                          padding: EdgeInsets.only(top: 71.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
