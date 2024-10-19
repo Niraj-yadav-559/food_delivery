@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/Pages/signup.dart';
+// import 'package:food_app/Pages/signup.dart';
+// import 'package:food_delivery/Pages/signup.dart';
 
 class Forgotpassword extends StatefulWidget {
   const Forgotpassword({super.key});
@@ -47,6 +49,16 @@ class _ForgotpasswordState extends State<Forgotpassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context); // Navigate back to the previous page
+          },
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
