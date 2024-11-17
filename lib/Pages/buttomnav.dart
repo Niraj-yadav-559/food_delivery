@@ -1,11 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/pages/home.dart';
-import 'package:food_app/pages/order.dart';
-import 'package:food_app/pages/profile.dart';
-// ignore: unused_import
-import 'package:food_app/pages/wallet.dart';
 
+import 'home.dart';
+import 'order.dart';
+import 'profile.dart';
 class Buttomnav extends StatefulWidget {
   const Buttomnav({super.key});
 
@@ -21,15 +19,15 @@ class _ButtomnavState extends State<Buttomnav> {
   late Home homepage;
   late Profile profile;
   late Order order;
-  late Wallet wallet;ō
+  // late Wallet wallet;
 
   @override
   void initState() {
     homepage = const Home();
     order = const Order();
     profile = const Profile();
-    wallet = const Wallet(); 
-    pages = [homepage, order, wallet, profile];
+    // wallet = const Wallet(); 
+    // pages = [homepage, order, wallet, profile];
     super.initState();
   }
   @override

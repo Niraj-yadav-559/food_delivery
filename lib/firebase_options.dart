@@ -42,17 +42,17 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyCep3Vt3gK0cFFr6949u6FATuzMXCbf2KE',
-    appId: '1:409470543055:web:a2729d9b587a3d96e3c3ba',
+    appId: '1:409470543055:web:5409ffdf92f9cc2ee3c3ba',
     messagingSenderId: '409470543055',
     projectId: 'fooddeliveryapp-aff4e',
     authDomain: 'fooddeliveryapp-aff4e.firebaseapp.com',
     storageBucket: 'fooddeliveryapp-aff4e.appspot.com',
-    measurementId: 'G-D1SK2GJ99Y',
+    measurementId: 'G-HWMNT2X099',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDJcrBnNn28O5AgpldeS9gb1s4xbICQMbs',
-    appId: '1:409470543055:android:2b06785ed3e95a9ee3c3ba',
+    appId: '1:409470543055:android:46ac51b1b6d43559e3c3ba',
     messagingSenderId: '409470543055',
     projectId: 'fooddeliveryapp-aff4e',
     storageBucket: 'fooddeliveryapp-aff4e.appspot.com',
@@ -60,7 +60,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBNgicHU8AvrIe8zy0-9tHqakdiSSaif9M',
-    appId: '1:409470543055:ios:769ee3e22a1083a4e3c3ba',
+    appId: '1:409470543055:ios:43ff140c6e1cb46fe3c3ba',
     messagingSenderId: '409470543055',
     projectId: 'fooddeliveryapp-aff4e',
     storageBucket: 'fooddeliveryapp-aff4e.appspot.com',
@@ -69,7 +69,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyBNgicHU8AvrIe8zy0-9tHqakdiSSaif9M',
-    appId: '1:409470543055:ios:769ee3e22a1083a4e3c3ba',
+    appId: '1:409470543055:ios:43ff140c6e1cb46fe3c3ba',
     messagingSenderId: '409470543055',
     projectId: 'fooddeliveryapp-aff4e',
     storageBucket: 'fooddeliveryapp-aff4e.appspot.com',
@@ -78,11 +78,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyCep3Vt3gK0cFFr6949u6FATuzMXCbf2KE',
-    appId: '1:409470543055:web:05e2f377dc2dedf5e3c3ba',
+    appId: '1:409470543055:web:2115bc97a60b8bd4e3c3ba',
     messagingSenderId: '409470543055',
     projectId: 'fooddeliveryapp-aff4e',
     authDomain: 'fooddeliveryapp-aff4e.firebaseapp.com',
     storageBucket: 'fooddeliveryapp-aff4e.appspot.com',
-    measurementId: 'G-VCMDHNP3RF',
+    measurementId: 'G-NFF5Q498N2',
   );
 }

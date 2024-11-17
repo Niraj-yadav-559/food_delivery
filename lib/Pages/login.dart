@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:food_app/Pages/forgotpassword.dart';
-import 'package:food_app/Pages/home.dart';
-// Make sure to import the Onboard page
-import 'package:food_app/wiget/widget_support.dart'; // Correct import for your widget support
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';  // Import Firestore
+
+import '../dashboard.dart';
+import '../wiget/widget_support.dart';
+import 'forgotpassword.dart';
+
 import 'signup.dart';
 
 class Login extends StatefulWidget {
@@ -25,15 +28,25 @@ class _LoginState extends State<Login> {
 
     try {
       // Sign in the user with email and password
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential =
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      // Successful login, navigate to the Onboard page
+      // After successful login, fetch user details from Firestore
+      String username = await getUsername(userCredential.user!);
+      String userRole = await getUserRole(userCredential.user!);
+
+      // Store the user details in SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('username', username);  // Store name
+      await prefs.setString('userRole', userRole);  // Store role
+
+      // Successful login, navigate to the Home page
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const Home()),
+        MaterialPageRoute(builder: (context) => const Dashboard()),
       );
     } on FirebaseAuthException catch (e) {
       // Handle login errors
@@ -54,9 +67,50 @@ class _LoginState extends State<Login> {
     } catch (e) {
       // Catch any other errors
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("An unexpected error occurred.", style: TextStyle(fontSize: 20)),
+        content: Text("An unexpected error occurred.",
+            style: TextStyle(fontSize: 20)),
         backgroundColor: Colors.redAccent,
       ));
+    }
+  }
+
+  // Fetch username from Firestore
+  Future<String> getUsername(User user) async {
+    try {
+      // Get user document from Firestore using user UID
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')  // 'users' collection
+          .doc(user.uid)  // Use user UID as document ID
+          .get();
+
+      // Check if the document exists and fetch the 'name' field
+      if (userDoc.exists) {
+        return userDoc['name'] ?? 'Default Name';  // Use 'name' field from Firestore
+      } else {
+        return 'Default Name';  // Return a default value if user data is not found
+      }
+    } catch (e) {
+      return 'Default Name';  // Return default if any error occurs
+    }
+  }
+
+  // Fetch role from Firestore
+  Future<String> getUserRole(User user) async {
+    try {
+      // Get user document from Firestore using user UID
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')  // 'users' collection
+          .doc(user.uid)  // Use user UID as document ID
+          .get();
+
+      // Check if the document exists and fetch the 'role' field
+      if (userDoc.exists) {
+        return userDoc['role'] ?? 'user';  // Use 'role' field from Firestore
+      } else {
+        return 'user';  // Default role if no user data is found
+      }
+    } catch (e) {
+      return 'user';  // Default role if any error occurs
     }
   }
 
@@ -119,7 +173,8 @@ class _LoginState extends State<Login> {
                       child: Column(
                         children: [
                           const SizedBox(height: 30.0),
-                          Text("Login", style: AppWidget.HeadlineTextFeildStyle()),
+                          Text("Login",
+                              style: AppWidget.HeadlineTextFeildStyle()),
                           TextField(
                             controller: emailController,
                             decoration: InputDecoration(
@@ -141,11 +196,17 @@ class _LoginState extends State<Login> {
                           const SizedBox(height: 20.0),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const Forgotpassword()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                    const Forgotpassword(),
+                                  ));
                             },
                             child: Container(
                               alignment: Alignment.topRight,
-                              child: Text("Forgot Password?ss", style: AppWidget.semiboldTextFeildStyle()),
+                              child: Text("Forgot Password?ss",
+                                  style: AppWidget.semiboldTextFeildStyle()),
                             ),
                           ),
                           const SizedBox(height: 80.0),
@@ -155,7 +216,8 @@ class _LoginState extends State<Login> {
                             child: GestureDetector(
                               onTap: login, // Call the login method on tap
                               child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                padding:
+                                const EdgeInsets.symmetric(vertical: 8.0),
                                 width: 200,
                                 decoration: BoxDecoration(
                                   color: const Color(0xffff5722),
@@ -182,9 +244,14 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 70.0),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUp()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignUp(),
+                          ));
                     },
-                    child: Text("Don't have an account? Sign up", style: AppWidget.semiboldTextFeildStyle()),
+                    child: Text("Don't have an account? Sign up",
+                        style: AppWidget.semiboldTextFeildStyle()),
                   )
                 ],
               ),

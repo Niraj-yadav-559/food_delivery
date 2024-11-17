@@ -1,8 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:food_app/Pages/signup.dart';
-import 'package:food_app/wiget/content_model.dart';
-import 'package:food_app/wiget/widget_support.dart';
+
+import '../wiget/content_model.dart';
+import '../wiget/widget_support.dart';
+import 'signup.dart';
 // import 'package:food_delivery/wiget/content_model.dart';
 // import 'package:food_delivery/wiget/widget_support.dart';
 // import 'package:food_app/pages/signup.dart';

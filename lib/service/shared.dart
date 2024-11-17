@@ -1,60 +1,56 @@
-import 'package:flutter/physics.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceHelper {
-  static String userIdKey = "USERKEY";
-  static String userNameKey = "USERNAMEKEY";
-  static String userEmailKey = "USEREMAILKEY";
-  static String userWalletKey = "USERWALLETKEY";
-  static String userProfileKey = "USERPROFILEKEY";
+  static const String userIdKey = "USERKEY";
+  static const String userNameKey = "USERNAMEKEY";
+  static const String userEmailKey = "USEREMAILKEY";
+  static const String userWalletKey = "USERWALLETKEY";
+  static const String userProfileKey = "USERPROFILEKEY";
+  static const String userRoleKey = "USERROLEKEY";
 
-  Future<bool> saveUserID(String getUserId) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setString(userIdKey, getUserId);
+  // Helper method to get the SharedPreferences instance
+  Future<SharedPreferences> _getPrefs() async {
+    return await SharedPreferences.getInstance();
   }
 
-  Future<bool> saveUserName(String getUserName) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setString(userNameKey, getUserName);
+  // Generic method to save data to SharedPreferences
+  Future<bool> saveData(String key, String? value) async {
+    SharedPreferences prefs = await _getPrefs();
+    if (value == null) return prefs.remove(key); // If value is null, remove the key
+    return prefs.setString(key, value); // Save the value for the key
   }
 
-  Future<bool> saveUserEmail(String getUserEmail) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setString(userEmailKey, getUserEmail);
+  // Generic method to get data from SharedPreferences
+  Future<String?> getData(String key) async {
+    SharedPreferences prefs = await _getPrefs();
+    return prefs.getString(key);
   }
 
-  Future<bool> saveUserWallet(String getUserIdWallet) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setString(userWalletKey, getUserIdWallet);
+  // Save user data
+  Future<bool> saveUserId(String userId) => saveData(userIdKey, userId);
+  Future<bool> saveUserName(String userName) => saveData(userNameKey, userName);
+  Future<bool> saveUserEmail(String userEmail) => saveData(userEmailKey, userEmail);
+  Future<bool> saveUserWallet(String userWallet) => saveData(userWalletKey, userWallet);
+  Future<bool> saveUserProfile(String userProfile) => saveData(userProfileKey, userProfile);
+  Future<bool> saveUserRole(String userRole) => saveData(userRoleKey, userRole);
+
+  // Get user data
+  Future<String?> getUserId() => getData(userIdKey);
+  Future<String?> getUserName() => getData(userNameKey);
+  Future<String?> getUserEmail() => getData(userEmailKey);
+  Future<String?> getUserWallet() => getData(userWalletKey);
+  Future<String?> getUserProfile() => getData(userProfileKey);
+  Future<String?> getUserRole() => getData(userRoleKey);
+
+  // Remove user data
+  Future<bool> removeUserData(String key) async {
+    SharedPreferences prefs = await _getPrefs();
+    return prefs.remove(key); // Removes the value for the key
   }
 
-  Future<bool> saveUserProfile(String getUserProfile) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setString(userProfileKey, getUserProfile);
-  }
-
-  Future<String?> getUserId() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(userIdKey);
-  }
-
-  Future<String?> getUserName() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(userNameKey);
-  }
-
-  Future<String?> getUserEmail() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(userEmailKey);
-  }
-
-  Future<String?> getUserWallet() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(userWalletKey);
-  }
-
-  Future<String?> getUserProfile() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(userProfileKey);
+  // Remove all user data
+  Future<bool> clearAllData() async {
+    SharedPreferences prefs = await _getPrefs();
+    return prefs.clear(); // Clears all the stored preferences
   }
 }

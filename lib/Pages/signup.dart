@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/Pages/onboard.dart';
-import 'package:food_app/pages/login.dart';
-import 'package:food_app/wiget/widget_support.dart';  // Ensure this is correctly imported
+
+import '../wiget/widget_support.dart';
+import 'login.dart';
+import 'onboard.dart';
+ // Ensure this is correctly imported
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -41,6 +43,7 @@ class _SignUpState extends State<SignUp> {
           'name': name,
           'email': email,
           'uid': userId,
+          'role': User,
         });
 
         // Show success message and redirect to onboard screen
